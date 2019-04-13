@@ -48,6 +48,7 @@ data %<>% filter(Gender != "p")
 
 # Age categorization
 data$Age<-cut(data$Age, c(-Inf,20,35,65,Inf))
+# data$Age<-cut(data$Age, breaks=c(-Inf,21,35,65,Inf),labels = c("21 and under","22-35","36-65","65+"))
 
 # NA values detection and deleting the row.
 sapply(data, function(x) sum(is.na(x)))
@@ -88,36 +89,46 @@ for(i in 1:length(data)){
 }
 
 # Selection of variables with higher variability
-# data <- data.frame(gender= data$Gender,
-#                    family_history= data$family_history,
-#                    work_interfere= data$work_interfere,
-#                    benefits= data$benefits, 
-#                    care_options= data$care_options,
-#                    anonymity= data$anonymity,
-#                    treatment=data$treatment)
-# 
-# # Preparing regression function for the use in other methods
-# regression <- treatment~
-#   gender+
-#   family_history+
-#   work_interfere+
-#   benefits+
-#   care_options+
-#   anonymity
-# 
-# 
-# # Saving prediction percentage of each method
-# percent <- data.frame(methods=c("Trees Classifier", "Neuronal Network","Randon Forest","Bagging"), value=c(0,0,0,0))
-# 
-# # Data training and testing
-# set.seed(101)
-# n <- nrow(data)
-# data.index <- sample(1:n , size=round(n*0.7))
-# train <- data[data.index,]
-# test <- data[-data.index,]
-# 
-# model <- randomForest(treatment ~ .,  data=train)
-# 
-# 
-# 
-# 
+data <- data.frame(age= data$Age, gender= data$Gender,
+                   family_history= data$family_history,
+                   work_interfere= data$work_interfere,
+                   benefits= data$benefits,
+                   care_options= data$care_options,
+                   anonymity= data$anonymity,
+                   treatment=data$treatment)
+
+# Preparing regression function for the use in other methods
+regresion <- treatment~
+  age+
+  gender+
+  family_history+
+  work_interfere+
+  benefits+
+  care_options+
+  anonymity
+
+
+# Saving prediction percentage of each method
+percent <- data.frame(methods=c("Trees Classifier", "Neuronal Network","Randon Forest","Bagging"), value=c(0,0,0,0))
+
+# Data training and testing
+set.seed(101)
+n <- nrow(data)
+data.index <- sample(1:n , size=round(n*0.7))
+train <- data[data.index,]
+test <- data[-data.index,]
+
+mental_all_var <- treatment ~
+  age+
+  gender+
+  family_history+
+  work_interfere+
+  benefits+
+  care_options+
+  anonymity
+
+rpart_all_variables <- rpart(mental_all_var,
+                             data=train,
+                             method = "class")
+
+rpart.plot::rpart.plot(rpart_all_variables, type = 4, fallen.leaves = FALSE, extra = 5)

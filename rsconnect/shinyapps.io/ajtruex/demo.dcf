@@ -1,0 +1,13 @@
+name: demo
+title: demo
+username:
+account: ajtruex
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 860718
+bundleId: 2006464
+url: https://ajtruex.shinyapps.io/demo/
+when: 1555090106.70963
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: cleansurvey.csv|data-mining-of-mental-health.html|data-mining-of-mental-health.pdf|data-mining-of-mental-health.R|data-mining-of-mental-health.Rmd|Demo.nb.html|Demo.R|Demo.Rmd|Example.R|Example2.R|FinalProjectClean.R|Frequency.R|GenderFreq.png|mental-heath-in-tech-2016_20161114.csv|survey.csv
